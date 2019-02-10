@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Manages when games start and which players are put into the game
  * 
  * How to use:
- * Initialize a Lobby object with necessary parameters
+ * Initialize a Lobby object with parameters listed in constructor
  * The gameStart and gameEnd GameProcedures' run() methods are called when the game is started and when Lobby.gameComplete() is called
  * Add players to the lobby with Lobby.addPlayer() and remove players from the lobby with Lobby.removePlayer()
  * Remove players from the game with Lobby.removePlayer() when they are out of the game
@@ -66,9 +66,15 @@ public class Lobby{
 		this.gameEnd.run();
 	}
 
-	public void addPlayer(Player player) {
+	//Adds player to lobby and teleports them to the lobby location
+	public void joinPlayer(Player player) {
 		players.add(player);
 		player.teleport(lobbyLoc);
+	}
+	
+	//Adds player to lobby without teleporting them to the lobby location
+	public void addPlayer(Player player) {
+		players.add(player);
 	}
 	
 	public void removePlayer(Player player) {

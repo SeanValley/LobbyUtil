@@ -15,6 +15,8 @@ public class Queue extends BukkitRunnable{
 		this.gameStart = gameStart;
 	}
 	
+	
+	//replaced this.lobby.getPlayers() with livePlayers and added the initialization at the top
 	@Override
 	public void run() {
 		if(this.lobby.isGameOpen()) {
@@ -40,11 +42,13 @@ public class Queue extends BukkitRunnable{
 						this.lobby.addPlayerToGame(livePlayers.get(i));
 					}
 					
-					//TODO: Move players up in the queue
-					ArrayList<Player> currentLobby = this.lobby.getPlayers();
+					//Move players up in the queue
+					@SuppressWarnings("unchecked")
+					ArrayList<Player> currentLobby = (ArrayList<Player>) this.lobby.getPlayers().clone();
 					for(int i=this.lobby.getMaxPlayers();i<currentLobby.size();i++) {
 						this.lobby.clearPlayers();
 						this.lobby.addPlayer(currentLobby.get(i));
+						currentLobby.get(i).sendMessage(ChatColor.RED + "Too many players in lobby, you have been moved up in the queue.");
 					}
 					
 					for(int i=0;i<this.lobby.getMaxPlayers();i++) {
